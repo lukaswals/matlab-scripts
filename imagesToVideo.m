@@ -1,14 +1,15 @@
 function imagesToVideo(working_dir, output_dir, video_name, format)
-%% Convert Image Sequences to Video
+%% Convert one Image Sequence to Video
+%
+% Script to make a video filesfrom a folder that contains many images
+%
+% Author: Lucas German Wals Ochoa
+% Last Update: 2018/08/17
+%
 %% Setup
 % Change all this variables accordingly.
 %%
-%workingDir = 'C:\Users\lukas\Documents\MATLAB\videoresults';
 workingDir = working_dir;
-%imageDir = 'GOG-MVI_39931';
-%videoName = 'GOG_CompACT_0.0_MVI_39931';
-%videoName = 'FERN-sindoh0905_s3-15fps';
-%imageFormat = '*.jpg';
 outputDir = output_dir;
 videoName = video_name;
 imageFormat = ['*.' format];
@@ -45,7 +46,7 @@ for ii = 1:length(imageNames)
 end
 disp('Writen all images.');
 %% 
-% Finalize the video file.
+% Close the video file.
 %%
 close(outputVideo)
 

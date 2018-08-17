@@ -1,11 +1,11 @@
 function sequencesToVideos(base_dir, output_dir, format)
-%% Convert Image Sequences to Video
+%% Convert many Image Sequences to Video
 %
 % Script to make many video files from a folder that contains different
 % sequences of images
 %
 % Author: Lucas German Wals Ochoa
-% Last Update: 2018/06/27
+% Last Update: 2018/08/17
 %
 %% Some considerations
 % The directory where the images are stored will be "splitted" in two
