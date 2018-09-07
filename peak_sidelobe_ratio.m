@@ -8,28 +8,53 @@ function psr = peak_sidelobe_ratio(corrmat)
 %
 
 peakWH = 11;  % Width and Height of the Window around the Peak
+shifting = floor(peakWH/2); % How much we should shift the matrix when dealing with boundaries
 
 %load('sample_data/correlation_mat');
 %corrmat = response;
 [rows, cols] = size(corrmat);
-%sidelobe_Mask = ones(rows, cols);   % 1 for the sidelobe area, 0 for peak area
+% "Synthetic Examples"
+%corrmat = circshift(corrmat, [5,-1]);
+%corrmat = circshift(corrmat, [-3,3]);
 
 % Get location of the peak
 [x, y] = ind2sub(size(corrmat),find(corrmat == max(corrmat(:)), 1));
+
+% Handle patch boundaries by shifting the matrix in correspondent direction
+% and also calculate the new location of the peak.
+% We always shift the matrix by "shifting" value, just for ease of coding =P
+if x < (shifting + 1)
+    corrmat = circshift(corrmat, shifting, 1);
+    x = x + shifting;
+elseif x > (rows - (shifting + 1))
+    corrmat = circshift(corrmat, -(shifting+1), 1);
+    x = x - shifting -1;
+end
+if y < (shifting + 1)
+    corrmat = circshift(corrmat, shifting, 2);
+    y = y + shifting;
+elseif y > (cols - (shifting + 1))
+    corrmat = circshift(corrmat, -(shifting+1), 2);
+    y = y - shifting - 1;
+end
+
 % Get peak value
 peak_val = corrmat(x,y);
+%disp(peak_val);
 
-% Handle patch boundaries
-peak_Xtop = max(1, x - floor(peakWH/2) );
-peak_Ytop = max(1, y - floor(peakWH/2) );
-peak_Xbottom = min(rows, x + floor(peakWH/2) );
-peak_Ybottom = min(cols, y + floor(peakWH/2) );
+% Get Peak surrounding area
+peak_Xtop = x - floor(peakWH/2);
+peak_Ytop = y - floor(peakWH/2);
+peak_Xbottom = x + floor(peakWH/2);
+peak_Ybottom = y + floor(peakWH/2);
+
 
 % Set values from Peak area to zero, in order to remove them later
 corrmat([peak_Xtop:peak_Xbottom], [peak_Ytop:peak_Ybottom]) = 0;
 % Flatten the correlation matrix into a vector for easier handling
 sidelobe = corrmat(:);
-% Remove the Peak area elements and leave only the values of the Sidelobe
+% Remove the Peak area elements and leave only the values of the Sidelobe (in
+% order for the 0 values to not interfere in the calculation of the mean)
 sidelobe( sidelobe(:) == 0 ) = [];
 
 % Calculate Mean and Standard Deviation
