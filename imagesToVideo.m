@@ -1,10 +1,10 @@
-function imagesToVideo(working_dir, output_dir, video_name, format)
+function imagesToVideo(working_dir, output_dir, video_name, images_format)
 %% Convert one Image Sequence to Video
 %
 % Script to make a video filesfrom a folder that contains many images
 %
 % Author: Lucas German Wals Ochoa
-% Last Update: 2018/08/17
+% Last Update: 2018/09/17
 %
 %% Setup
 % Change all this variables accordingly.
@@ -12,7 +12,7 @@ function imagesToVideo(working_dir, output_dir, video_name, format)
 workingDir = working_dir;
 outputDir = output_dir;
 videoName = video_name;
-imageFormat = ['*.' format];
+imageFormat = ['*.' images_format];
 showProcessedImage = false; % Show the percentage of video processed
 
 %% Find Image File Names
@@ -27,7 +27,7 @@ imageNames = {imageNames.name}';
 disp('Creating new video file...');
 outputVideo = VideoWriter(fullfile(outputDir, videoName), 'MPEG-4');
 % Default Frame Rate is set to 30. Uncomment following line to change it
-%outputVideo.FrameRate = 15;  
+%outputVideo.FrameRate = 10;  
 open(outputVideo)
 %% 
 % Loop through the image sequence, load each image, and then write it to 
