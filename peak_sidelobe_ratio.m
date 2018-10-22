@@ -5,10 +5,10 @@ function psr = peak_sidelobe_ratio(corrmat, corner_peak)
 %
 % Author: Lucas German Wals Ochoa
 % Last Update: 2018/09/11
-%
+%%
 
 peakWH = 11;  % Width and Height of the Window around the Peak
-shifting = floor(peakWH/2); % How much we should shift the matrix when dealing with boundaries
+%shifting = floor(peakWH/2); % How much we should shift the matrix when dealing with boundaries
 
 %load('sample_data/correlation_mat');
 %corrmat = response;
@@ -29,6 +29,8 @@ end
 [x, y] = ind2sub(size(corrmat),find(corrmat == max(corrmat(:)), 1));
 
 %% OLD way of handling Correlation Peak being on Matrix corner
+% Don't forget to uncomment the "shifting variable" line above for this to work
+%
 % Handle patch boundaries by shifting the matrix in correspondent direction
 % and also calculate the new location of the peak.
 % We always shift the matrix by "shifting" value, just for ease of coding =P

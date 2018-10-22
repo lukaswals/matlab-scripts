@@ -1,15 +1,19 @@
 function apce = average_peak_correlation_energy(responseMap)
+%%
 % Calculates the APCE (Average Peak-to-Correlation Energy) of the response map
 % in order to obtain a measure of peak strength 
 %
 % Measurement proposed by the paper "Large margin object tracking with circulant
 % feature maps" by M. Wang et al.
+%
+% Author: Lucas German Wals Ochoa
+% Last Update: 2018/09/11
+%%
 
 %load('sample_data/correlation_mat');
 %corrmat = response;
 % Response Map size
 [rows, cols] = size(responseMap);
-%sidelobe_Mask = ones(rows, cols);   % 1 for the sidelobe area, 0 for peak area
 
 % Get location of the max and min peak
 [xmax, ymax] = ind2sub(size(responseMap),find(responseMap == max(responseMap(:)), 1));
