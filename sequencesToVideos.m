@@ -4,17 +4,19 @@ function sequencesToVideos(base_dir, output_dir, format)
 % Script to make many video files from a folder that contains different
 % sequences of images
 %
+% BASE_DIR = Path to the folder containing all the sequences/folder of
+%            images
+% OUTPUT_DIR = Path to where script should save all videos
+% FORMAT = Images extensions, e.g.: jpg, png, bmp, etc.
+%
+%
+% TODO > Possibility to choose the extension of saved video files
+%
 % Author: Lucas German Wals Ochoa
 % Last Update: 2018/08/17
 %
-%% Some considerations
-% The directory where the images are stored will be "splitted" in two
-% variables like these 'workingDir\imageDir'
-% So "workingDir" will be the directory where all the sequences are, and 
-% "imageDir" will be the directory where the images are
 %% Setup
 % Change all this variables accordingly if you not use the function input
-%%
 workingDir = base_dir;
 outputDir = output_dir;
 imageFormat = ['*.' format];
@@ -33,7 +35,6 @@ for i = 1:length(imagesDirs)
     %% Find Image File Names
     % Find all the |imageFormat| file names in the |images| folder. 
     % Convert the set of image names to a cell array.
-    %%
     imageDir = imagesDirs{i};
     imageNames = dir(fullfile(workingDir, imageDir, imageFormat));
     imageNames = {imageNames.name}';
@@ -44,7 +45,6 @@ for i = 1:length(imagesDirs)
         %% Create New Video with the Image Sequence
         % Construct a VideoWriter object. Unless specified otherwhise
         % it will create a Motion-JPEG AVI file by default.
-        %%
         fprintf('Creating video named "%s" in folder "%s"...\n', imageDir, outputDir);
         outputVideo = VideoWriter(fullfile(outputDir, imageDir), 'MPEG-4');
         % Default Frame Rate is set to 30. If you want to change it, uncomment following line
@@ -53,7 +53,6 @@ for i = 1:length(imagesDirs)
         %% 
         % Loop through the image sequence, load each image, and then write it to 
         % the video.
-        %%
         disp('--> Writing images to video file.');
         for ii = 1:length(imageNames)
             %if ( mod(ii,100) == 0 )
@@ -66,7 +65,6 @@ for i = 1:length(imagesDirs)
         disp('----> All images were written.');
         %% 
         % Close the video file.
-        %%
         close(outputVideo)
     end
 end
